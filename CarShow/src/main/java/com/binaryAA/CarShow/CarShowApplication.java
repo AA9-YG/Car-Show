@@ -35,8 +35,6 @@ public class CarShowApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CarShowApplication.class, args);
-
-
 	}
 
 	@Override

@@ -9,4 +9,10 @@ public interface CarService {
     List<Car> getCars();
 
     Car getCarById(Long id);
+
+    Car saveCar(Car car);
+
+    Car updateCar(Long id, Car car);
+
+    Car deleteCar(Long id);
 }
