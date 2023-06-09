@@ -1,8 +1,10 @@
 package com.binaryAA.CarShow;
 
 import com.binaryAA.CarShow.entity.Owner;
+import com.binaryAA.CarShow.entity.User;
 import com.binaryAA.CarShow.repository.CarRepository;
 import com.binaryAA.CarShow.repository.OwnerRepository;
+import com.binaryAA.CarShow.repository.UserRepository;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -31,6 +33,9 @@ public class CarShowApplication implements CommandLineRunner {
 	@Autowired
 	private OwnerRepository ownerRepo;
 
+	@Autowired
+	private UserRepository userRepo;
+
 	private static final Logger logger = LoggerFactory.getLogger(CarShowApplication.class);
 
 	public static void main(String[] args) {
@@ -54,6 +59,8 @@ public class CarShowApplication implements CommandLineRunner {
 
 		carRepo.saveAll(cars);
 		ownerRepo.saveAll(owners);
+		userRepo.save(new User("user", "$2y$10$ScjYnlgtYxHama9pHlpZAekHWCgx.q.myFuIdyZkYDkaBfnTBbE6q", "USER"));
+		userRepo.save(new User("admin", "$2y$10$h26Vc5Iz4GiFN3RGptjUSefuaC5EXy.dUJB6wnmtsqG99ax3/ovma", "ADMIN"));
 
 		carRepo.findAll().forEach(car -> logger.info(car.getMake() + " " + car.getModel() + " " + car.getColor()));
 	}
