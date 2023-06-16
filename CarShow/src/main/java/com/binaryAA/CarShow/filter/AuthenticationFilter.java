@@ -35,7 +35,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         // Authenticate the user
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX+jwtToken);
+//        response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX+jwtToken);
 
         }
 

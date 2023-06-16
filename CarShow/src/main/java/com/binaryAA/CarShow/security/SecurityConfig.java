@@ -46,35 +46,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
+//        httpSecurity.
+//                csrf().disable().cors()
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeHttpRequests(auth-> {
+//                    auth.requestMatchers(HttpMethod.POST,"/login").permitAll();
+//                    auth.requestMatchers(HttpMethod.GET,"/api/v1/car/*").permitAll();
+//                    try {
+//                        auth.anyRequest().authenticated()
+//                                .and()
+//                                .exceptionHandling()
+//                                .authenticationEntryPoint(exceptionHandler)
+//                                .and()
+//                                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//                    } catch (Exception e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                });
+
         httpSecurity.
                 csrf().disable().cors()
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests(auth-> {
-                    auth.requestMatchers(HttpMethod.POST,"/login").permitAll();
-                    auth.requestMatchers(HttpMethod.GET,"/api/v1/car/*").permitAll();
-                    try {
-                        auth.anyRequest().authenticated()
-                                .and()
-                                .exceptionHandling()
-                                .authenticationEntryPoint(exceptionHandler)
-                                .and()
-                                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-
-//        httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> {
-//            auth.requestMatchers(HttpMethod.POST, "api/v1/car").hasRole("ADMIN");
-//            auth.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN");
-//            auth.requestMatchers(HttpMethod.GET).permitAll()
-//                    .anyRequest().authenticated()
-//                    .and()
-//                    .addFilterBefore(authenticationFilter, AuthenticationFilter.class);}).httpBasic(Customizer.withDefaults())
-//                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .authorizeHttpRequests()
+                .anyRequest().permitAll();
 
         // This below is deprecated
 //                httpSecurity.csrf().disable()
@@ -88,7 +85,7 @@ public class SecurityConfig {
 //                .and().httpBasic()
 //                .and()
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//
+
 //        return httpSecurity.build();
 //
 //        httpSecurity.csrf().disable()
@@ -104,6 +101,7 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
                 .passwordEncoder(new BCryptPasswordEncoder());
@@ -141,8 +139,8 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new
                 UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList(""));
-        config.setAllowedMethods(Arrays.asList(""));
+        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowedMethods(Arrays.asList("*"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(false);
         config.applyPermitDefaultValues();
